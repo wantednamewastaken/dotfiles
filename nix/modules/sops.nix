@@ -13,7 +13,12 @@
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
 
-  sops.age.keyFile = "/home/ryan/.config/sops/age/keys.txt";
+  sops.age = {
+    keyFile = "/home/ryan/.config/sops/age/keys.txt";
+    sshKeyPaths = [ "/home/ryan/.ssh/passwordless_ed25519" ];
+    # generate a new key if the key specified above does not exist
+    #generateKey = true;
+  };
 
   sops.secrets = {
     example_key = { };

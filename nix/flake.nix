@@ -75,6 +75,7 @@
           #pkgs = import nixpkgs home-manager { system = system; };
           modules = [
             ./configuration.nix
+            #./modules
             ./modules/podman.nix
             ./modules/helix.nix
             ./modules/server-hdd.nix
