@@ -1,17 +1,9 @@
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
-end
-
-function nmap(shortcut, command)
-  map('n', shortcut, command)
-end
-
-function imap(shortcut, command)
-  map('i', shortcut, command)
-end
-
---vo=vim.o
-
+require('ryan.plugins')
+require('ryan.keybinds')
+require('ryan.autocmds')
+require('ryan.extra')
+require('ryan.nixd')
+require('ryan.reload')
 
 --- source $VIMRUNTIME/defaults.vim
 --- fenc might be pointless, just trying to fix shit"""
@@ -40,11 +32,6 @@ end
 -- autocmd WinNew * wincmd L
 vim.env.BASH_ENV = vim.fn.expand("~/.bash_aliases")
 
-require('ryan.plugins')
-require('ryan.autocmds')
-require('ryan.extra')
-require('ryan.reload')
-require('ryan.nixd')
 
 -- Eliminate potential vim issues
 vim.g.nocompatible = true
@@ -55,9 +42,9 @@ vim.cmd("filetype plugin on")
     -- Load an indent file for the detected file type.
 vim.cmd("filetype indent on")
 
-vim.o.syntax = true
-vim.o.number = true
-vim.o.confirm = true
+--vim.o.syntax = true
+--vim.o.number = true
+--vim.o.confirm = true
 
 -- Move to the next buffer
 nmap('<tab>',':bnext<CR>')
@@ -70,70 +57,9 @@ vim.o.splitright = true
 -- Fold settings
 vim.o.foldmethod = "indent"
 vim.o.foldignore = ' '
-vim.o.foldlevelstart = 1
+vim.o.foldlevelstart = 3
 vim.o.foldminlines = 20
 
-nmap('<C-f>',":Files! <cr>")
-nmap('<C-g>',":GFiles! <cr>")
-
-nmap('<A-j>',':m .+1<CR>==')
-nmap('<A-k>',':m .-2<CR>==')
-imap('<a-j>','<esc>:m .+1<cr>==gi')
-imap('<a-k>','<esc>:m .-2<cr>==gi')
-imap('<a-j>',':m ">+1<cr>gv=gv"')
-imap('<A-k>',':m "<-2<CR>gv=gv"')
-
--- inoremap <silent><expr><TAB>
---             \ pumvisible() ? \"\<C-n" : \"\<TAB>"
--- set instead of let?
--- let mapleader='\'
-vim.g.mapleader=';'
--- let maplocalleader=something
--- Also available is 'resize' (res), 'vertical resize'
-nmap('<Leader><left>',':50winc <<cr>')
-nmap('<Leader><right>',':50winc ><cr>')
-nmap('<Leader><up>',':5winc -<cr>')
-nmap('<Leader><down>',':5winc +<cr>')
-nmap('<C-A-h>','<C-w>h')
-nmap('<C-A-j>','<C-w>j')
-nmap('<C-A-k>','<C-w>k')
-nmap('<C-A-l>','<C-w>l')
-nmap('<Leader><,>','<C-w><')
-nmap('<F2>',':ALEGoToDefinition<cr>')
-nmap('<F3>',':ALEFindReferences<cr>')
-nmap('T',':terminal<cr>')
-nmap('-',':NERDTreeToggle<cr>')
-nmap('<F5>',':noh<cr>')
--- nmap w :w
-nmap('Q',':q<cr>')
--- imap jj <Esc>
-imap('jj','<Esc>:ALEFix<cr>')
-nmap('<Leader>t',':TransparentToggle<cr>')
--- nmap F :Files 
---  set NERDTree remap
-
---nmap('<leader>so',':source $MYVIMRC<CR>')
-nmap('<leader>so',"<cmd>lua ReloadConfig()<CR>")
--- nnoremap <Leader>r :! \&filetype %:S<cr>
-nmap('<Leader>r',":execute '! ' . &filetype . ' ' . expand('%:S')<CR>")
--- nnoremap <Leader>r :execute 'w | !' . &filetype . ' ' . expand('%:S')<CR>
----- BUFFERS ----
--- nnoremap <Leader><f> :lua require("harpoon.mark").add_file()<cr>
-nmap('<Leader>h',':lua require("harpoon.ui").toggle_quick_menu()<cr>')
-nmap('<Leader>m',':lua require("harpoon.mark").add_file()<cr>')
-nmap('<leader>b',':Buffers<cr>')
-nmap('<leader>j',':Jumps<cr>')
-nmap('<leader>n',':bnext<cr>')
-nmap('<leader>p',':bprevious<cr>')
-nmap('<leader>d',':bdelete<cr>')
-nmap('<leader>c',':close<cr>')
-nmap('<leader>s',':vsplit<cr>')
-nmap('<leader>w',':w<cr>')
-----Quickfix----
-nmap('<leader>q',':copen<cr>')
-nmap('<leader>v',':cnext<cr>')
-nmap('<leader>x',':cprev<cr>')
-nmap('<leader>v',':vimgrep')
 -------
 -- vim.lsp.buf.rename() probably useful to setup to change variable names easy
 
@@ -176,8 +102,8 @@ vim.g.ale_fix_on_save = 1
 -- print("Setting color...")
 -- vim.cmd([[colorscheme monokai]])
 vim.cmd.colorscheme "monokai"
--- vim.cmd("colorscheme synthwave84")
--- vim.cmd("colorscheme molokai ")
+--vim.cmd("colorscheme synthwave84")
+--vim.cmd("colorscheme molokai ")
 -- vim.cmd("colorscheme onedark")
 -- vim.cmd [[ colorscheme gruvbox ]]
 -- print("SHould be set")
@@ -203,8 +129,10 @@ vim.o.cursorline = true
 vim.g.nocursorcolumn = true
 -- " Set shift width to 4 spaces.
 vim.g.shiftwidth = 4
+vim.o.shiftwidth = 4
 -- " Set tab width to 4 columns.
-vim.g.tabstop=4
+vim.g.tabstop=2
+--vim.o.tabstop=4
 -- " Use space characters instead of tabs.
 vim.g.expandtab = true
 -- " Do not save backup files.
@@ -263,3 +191,4 @@ vim.o.relativenumber = true
 -- """""""""""""""""""""""""""""""""""""""""""""""'
 -- " }}}
 
+-- print(package.loaded[ryan])

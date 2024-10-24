@@ -97,7 +97,7 @@
 
         "nixos-i3" = lib.nixosSystem {
           specialArgs = {
-            inherit inputs helix;
+            inherit  helix;
           };
           inherit system;
           #pkgs = import nixpkgs home-manager { system = system; };
