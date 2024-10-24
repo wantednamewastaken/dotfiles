@@ -1,0 +1,2 @@
+/home/ryan/.local/share/nvim/site/autoload  - autoload
+HOME  - .vim
