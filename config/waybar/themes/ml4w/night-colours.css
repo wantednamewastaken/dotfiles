@@ -1,0 +1,9 @@
+/* -----------------------------------------------------
+ * Import Pywal colors 
+ * ----------------------------------------------------- */
+
+@define-color darkest-blue rgb(10,30,92);
+@define-color dark-blue rgb(25,51,122);
+@define-color blue-purple rgba(48,58,137,1);
+@define-color dark-purple rgb(74,64,144);
+@define-color light-purple rgb(115,93,189);
