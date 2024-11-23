@@ -1,126 +1,111 @@
 {
-  description = "Please work";
+  description = "Your new nix config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    # You can access packages and modules from different nixpkgs revs
+    # at the same time. Here's an working example:
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    helix.url = "github:helix-editor/helix/master";
+    # Home manager
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+		nix-flatpak = {
+			url = "github:gmodena/nix-flatpak";
+      #inputs.nixpkgs.follows = "nixpkgs";
+		};
+    #flathub = {
+    #  url = "httsp://dl.flathub.org/repo/flathub.flatpakrepo";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      helix,
+			nix-flatpak,
       home-manager,
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs;
-      lib = nixpkgs.lib;
+      inherit (self) outputs;
+      # Supported systems for your flake packages, shell, etc.
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+      # This is a function that generates an attribute by calling a function you
+      # pass to it, with each system as an argument
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
-      homeConfigurations = {
-        "ryan" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          #pkgs = import nixpkgs { system = system; };
-          modules = [ ./home.nix ];
-          extraSpecialArgs = {
-            username = "ryan";
-            inherit inputs;
-          };
-        };
+      # Your custom packages
+      # Accessible through 'nix build', 'nix shell', etc
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      #packages = forAllSystems (pkgs: import ./pkgs {inherit pkgs;});
+      # Formatter for your nix files, available through 'nix fmt'
+      # Other options beside 'alejandra' include 'nixpkgs-fmt'
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-        #"ashley" = home-manager.lib.homeManagerConfiguration {
-        #  inherit pkgs;
-        #  #pkgs = import nixpkgs { system = system; };
-        #  modules = [
-        #    ./ashley/home.nix
-        #  ];
-        #  extraSpecialArgs = {
-        #    username = "ashley";
-        #    inherit inputs;
-        #  };
-        #};
+      # Your custom packages and modifications, exported as overlays
+      overlays = import ./overlays { inherit inputs; };
+      # Reusable nixos modules you might want to export
+      # These are usually stuff you would upstream into nixpkgs
+      nixosModules = import ./modules/nixos; #{ inherit inputs; };
+      # Reusable home-manager modules you might want to export
+      # These are usually stuff you would upstream into home-manager
+      homeManagerModules = import ./modules/home-manager;
 
-        #import ./home-conf.nix {
-      };
-      #homeConfigurations."server-nixos" = import ./home-conf.nix {
-      #  #import ./home-conf.nix {
-      #    inherit inputs system nixpkgs home-manager;
-      #    specialArgs = inputs;
-      #    ];
-      #    extraSpecialArgs = {
-      #      helix-master = helix;
-      #    };
-      #};
-
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
-        "server-nixos" = lib.nixosSystem {
-          specialArgs = {
-            inherit inputs helix;
-          };
-          inherit system;
-          #pkgs = import nixpkgs home-manager { system = system; };
+        # FIXME replace with your hostname
+        server-nixos = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
           modules = [
-            ./configuration.nix
-            #./modules
-            ./modules/podman.nix
-            ./modules/helix.nix
-            ./modules/server-hdd.nix
-            ./modules/sops.nix
-            ./modules/python.nix
-            #./alacritty.nix
-            #./picom.nix
-            #sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ryan = import ./ryan/home.nix;
-              #home-manager.extraSpecialArgs = [
-              #    import nixpkgs
-              #];
-            }
-          ];
-        };
-
-        "nixos-i3" = lib.nixosSystem {
-          specialArgs = {
-            inherit  helix;
-          };
-          inherit system;
-          #pkgs = import nixpkgs home-manager { system = system; };
-          modules = [
-            ./configuration.nix
-            #./podman.nix
-            #./alacritty.nix
-            #sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ryan = import ./home.nix;
-              #home-manager.users.username = import "./{$username}/home.nix";
-            }
+            # > Our main nixos configuration file <
+            ./nixos/configuration.nix
+						./modules/nixos
+						./modules/home-manager
+						nix-flatpak.nixosModules.nix-flatpak
+						#sops-nix.nixosModules.sops
+						home-manager.nixosModules.home-manager
+						{
+							#home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users.ryan = import ./home-manager/home.nix;
+							home-manager.extraSpecialArgs = { inherit inputs outputs; };
+						}
           ];
         };
       };
 
-      # nixosConfigurations = import ./configuration.nix {
-      #     inherit (nixpkgs) pkgs lib config;
-      #     inherit inputs system;
-      # };
+      # Standalone home-manager configuration entrypoint
+      # Available through 'home-manager --flake .#your-username@your-hostname'
+      homeConfigurations = {
+        # FIXME replace with your username@hostname
+        "ryan@server-nixos" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+          ];
+        };
+      };
     };
 }

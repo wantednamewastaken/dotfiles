@@ -26,17 +26,17 @@ Plug 'xiyaowong/transparent.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lualine/lualine.nvim'
-    Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
-    Plug 'nvim-treesitter/nvim-treesitter'
-    Plug 'sharkdp/fd'
-    Plug 'BurntSushi/ripgrep'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ThePrimeagen/vim-be-good'
-Plug 'm4xshen/hardtime.nvim'
-    Plug 'MunifTanjim/nui.nvim'
-    Plug 'nvim-lua/plenary.nvim'
+#Plug 'nvim-lualine/lualine.nvim'
+#    Plug 'nvim-tree/nvim-web-devicons'
+#Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+#    Plug 'nvim-treesitter/nvim-treesitter'
+#    Plug 'sharkdp/fd'
+#    Plug 'BurntSushi/ripgrep'
+#Plug 'christoomey/vim-tmux-navigator'
+#Plug 'ThePrimeagen/vim-be-good'
+#Plug 'm4xshen/hardtime.nvim'
+#    Plug 'MunifTanjim/nui.nvim'
+#    Plug 'nvim-lua/plenary.nvim'
 call plug#end()
 ]]
 

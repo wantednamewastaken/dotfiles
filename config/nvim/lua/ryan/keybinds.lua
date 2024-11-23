@@ -17,8 +17,9 @@ nmap('<tab>',':bnext<CR>')
 -- Move to the previous buffer
 nmap('<s-tab>',':bprev<CR>')
 
-nmap('<C-f>',":Files! <cr>")
-nmap('<C-g>',":GFiles! <cr>")
+nmap('<C-f>',":Telescope find_files <cr>")
+nmap('<C-g>',":Telescope git_files <cr>")
+--nmap('<C-g>',":Telescope live_grep <cr>")
 
 nmap('<A-j>',':m .+1<CR>==')
 nmap('<A-k>',':m .-2<CR>==')
@@ -29,10 +30,7 @@ imap('<A-k>',':m "<-2<CR>gv=gv"')
 
 -- inoremap <silent><expr><TAB>
 --             \ pumvisible() ? \"\<C-n" : \"\<TAB>"
--- set instead of let?
--- let mapleader='\'
 vim.g.mapleader=';'
--- let maplocalleader=something
 -- Also available is 'resize' (res), 'vertical resize'
 nmap('<Leader><left>',':50winc <<cr>')
 nmap('<Leader><right>',':50winc ><cr>')
@@ -62,14 +60,17 @@ nmap('<Leader>t',':TransparentToggle<cr>')
 nmap('<Leader>r',":execute '! ' . &filetype . ' ' . expand('%:S')<CR>")
 -- nnoremap <Leader>r :execute 'w | !' . &filetype . ' ' . expand('%:S')<CR>
 ---- BUFFERS ----
-vim.api.nvim_set_keymap('n', '<Leader>so', '<Cmd>lua ReloadConfig()<CR>', { silent = true, noremap = true })
--- vim.cmd('command! ReloadConfig lua ReloadConfig()')
-require("plenary.reload").reload_module("ryan") -- replace with your own namespace
+--nmap('<Leader>so', ':luafile $MYVIMRC<cr>', { silent = true, noremap = true })
+nmap('<Leader>so', '<Cmd>lua ReloadConfig()<CR>', { silent = true, noremap = true })
+--vim.api.nvim_set_keymap('n', '<Leader>so', '<Cmd>lua ReloadConfig()<CR>', { silent = true, noremap = true })
+---- vim.cmd('command! ReloadConfig lua ReloadConfig()')
+--require("plenary.reload").reload_module("ryan") -- replace with your own namespace
 
 -- nnoremap <Leader><f> :lua require("harpoon.mark").add_file()<cr>
-nmap('<Leader>h',':lua require("harpoon.ui").toggle_quick_menu()<cr>')
+--nmap('<Leader>h',':lua require("harpoon.ui").toggle_quick_menu()<cr>')
 nmap('<Leader>m',':lua require("harpoon.mark").add_file()<cr>')
-nmap('<leader>b',':Buffers<cr>')
+nmap('<Leader>l',':Lazy<cr>')
+nmap('<leader>b',':Telescope buffers<cr>')
 nmap('<leader>j',':Jumps<cr>')
 nmap('<leader>n',':bnext<cr>')
 nmap('<leader>p',':bprevious<cr>')

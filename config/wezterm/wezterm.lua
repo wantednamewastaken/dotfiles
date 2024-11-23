@@ -9,9 +9,12 @@ config.default_prog = { '/run/current-system/sw/bin/zsh' }
 config.enable_tab_bar = false
 -- hide_tab_bar_if_only_one_tab = true
 config.disable_default_key_bindings = true
+config.enable_wayland = false
 -- For example, changing the color scheme:
 -- config.font = wezterm.font 'JetBrains Mono'
 config.font = wezterm.font 'Hack Nerd Font'
+--config.font_with_fallback = wezterm.font_with_fallback { 'Hack Nerd Font', 'Noto' }
+warn_about_missing_glyphs = false
 config.font_size = 13.0
 -- config.color_scheme = 'AdventureTime'
 -- config.color_scheme = 'Batman'
@@ -51,6 +54,7 @@ config.window_padding = {
   bottom = '0.5cell',
 }
 
+warn_about_missing_glyphs = false
 --config.window_background_gradient = {
  --     orientation = 'Vertical',
       -- Specifies the set of colors that are interpolated in the gradient.
