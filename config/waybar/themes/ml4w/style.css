@@ -78,7 +78,7 @@ window#waybar {
   /*color: @fg;*/
   color: @textcolor2;
   border: 2px solid #FFFFFF;
-  border-radius: 13px;
+  border-radius: 11px;
   padding: 0px 8px 0px 8px;
   background-color: @workspacesbackground1;
   opacity:0.7;
@@ -87,15 +87,15 @@ window#waybar {
 #workspaces button:hover {
     color: @textcolor1;
     background: @workspacesbackground2;
-    border-radius: 13px;
+    border-radius: 11px;
     opacity:0.6;
 }
 
 #workspaces button.active {
     color: @textcolor1;
     background: @workspacesbackground2; /*rgb(63,114,175);  rgb(66,72,116); #51e2f5; #474788;*/
-    border: 2px solid #FFFFFF;
-    border-radius: 13px;
+    /*border: 2px solid #FFFFFF;*/
+    border-radius: 11px;
     min-width: 40px;
     transition: all 0.3s ease-in-out;
     opacity:0.8;
