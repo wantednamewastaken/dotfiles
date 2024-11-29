@@ -3,7 +3,8 @@
  * ----------------------------------------------------- */
 @import '../../../../../.cache/wal/colors-waybar.css';
 
-@define-color backgroundlight #444444;
+/*@define-color backgroundlight #444444;*/
+@define-color backgroundlight #303030;
 @define-color backgrounddark #FFFFFF;
 @define-color workspacesbackground1 transparent;
 @define-color workspacesbackground2 #FFFFFF;

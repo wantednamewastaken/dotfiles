@@ -63,6 +63,9 @@
   environment.systemPackages = with pkgs; [
 		kitty
 		waybar
+		swaynotificationcenter
+		hyprshot
+		brightnessctl
 		libsForQt5.qt5.qtgraphicaleffects
 		sddm
 		unstable.catppuccin-sddm
@@ -100,7 +103,7 @@
 		)
 		] ++ [ # Notification stuff
 		libnotify
-		dunst
+		#dunst
 		#mako
 		] ++ [ # Wallpaper
 		hyprpaper
