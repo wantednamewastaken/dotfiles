@@ -12,12 +12,12 @@
   environment.systemPackages = with pkgs; [
 		gettext
 		#cinnamon-gsettings-overrides
-		gnome.dconf-editor
+		gdm
+		dconf-editor
 		gnomeExtensions.settingscenter
-		gnome.gdm
 		gnome.nixos-gsettings-overrides
-		gnome.gnome-tweaks
-		gnome.gnome-system-monitor
+		gnome-tweaks
+		gnome-system-monitor
 		] ++ [ # Theme stuff
 		tokyonight-gtk-theme
 		orchis-theme

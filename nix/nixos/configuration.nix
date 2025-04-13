@@ -277,7 +277,7 @@
       brave
       dmenu
       git
-      gnome.gnome-keyring
+      gnome-keyring
       unstable.font-awesome
       (unstable.nerdfonts.override {
         fonts = [
