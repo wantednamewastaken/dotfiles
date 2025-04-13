@@ -10,8 +10,17 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ 
+		"kvm-intel"
+		"rtw89"
+	];
   boot.extraModulePackages = [ ];
+	boot.kernelPackages = pkgs.linuxPackages_latest;
+	hardware = {
+		bluetooth.enable = true;
+		enableRedistributableFirmware = true;
+		enableAllFirmware = true;
+	};
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4b661667-8f48-41d1-834b-295565aef1c3";

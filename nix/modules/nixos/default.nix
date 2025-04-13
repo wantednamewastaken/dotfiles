@@ -16,9 +16,9 @@
 	#SpecialArgs = { inherit inputs pkgs outputs; };
   imports = [
 		#./desktop-environments/i3.nix
-		./desktop-environments/hyprland.nix
+		#./desktop-environments/hyprland.nix
 		#./../../pkgs
-		#./desktop-environments/cinnamon.nix
+		./desktop-environments/cinnamon.nix
 		#./desktop-environments/kde.nix
 		] ++ [ # Essentials/Basics
     ./qt.nix

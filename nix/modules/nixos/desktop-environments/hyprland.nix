@@ -188,12 +188,12 @@
 			#};
 			gtk3 = {
 				extraConfig = {
-					gtk-application-prefer-dark-theme=1;
+					gtk-application-prefer-dark-theme=false;
 				};
 			};
 			gtk4 = {
 				extraConfig = {
-					gtk-application-prefer-dark-theme=1;
+					gtk-application-prefer-dark-theme=false;
 					#gtk-theme-name="Adwaita";
 					#gtk-icon-theme-name="Papirus-Dark";
 					gtk-font-name="Cantarell 11";

@@ -115,13 +115,17 @@
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
+      #allowedTCPPorts = [ 8096 ];
+      #allowedUDPPorts = [ 8096 ];
     };
 
     # TODO: Set your hostname
     hostName = "server-nixos";
     networkmanager.enable = true;
+		#wireless = {
+		#	enable = true;
+		#	networks."SHAW-D46EK" = { psk = "Steel22G45"; };
+		#};
   };
 
   # edit as per your location and timezone
@@ -145,7 +149,7 @@
   };
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ];
 
-  sound.enable = true;
+  #sound.enable = true;
 
   services = {
     # Stupid naming convention, some xserver options used in hyprland(displayManager) and others not (xkb.*).
@@ -165,24 +169,25 @@
       displayManager = lib.mkDefault {
         lightdm.enable = true;
         lightdm.greeter.enable = true;
-        lightdm.background = /home/ryan/pictures/wallpapers/0001.jpg;
+        #lightdm.background = /home/ryan/pictures/wallpapers/0001.jpg;
       };
     };
-    picom = {
-      enable = true;
-      fade = true;
-      #   settings = {
-      vSync = true;
-      #   backend = "xrender";     # or "gl" for screen tearing
-      #   settings = {
-      #       fading = {
-      #           backend = "xrender";    # or "gl" if you prefer
-      #            method = "linear";      # can be "linear", "cubic", etc.
-      #            time = 100;
-      #            # };
-      #        };
-      #   };
-    };
+		# FIXME: Should be in picom file
+    #picom = {
+    #  enable = true;
+    #  fade = true;
+    #  #   settings = {
+    #  vSync = true;
+    #  #   backend = "xrender";     # or "gl" for screen tearing
+    #  #   settings = {
+    #  #       fading = {
+    #  #           backend = "xrender";    # or "gl" if you prefer
+    #  #            method = "linear";      # can be "linear", "cubic", etc.
+    #  #            time = 100;
+    #  #            # };
+    #  #        };
+    #  #   };
+    #};
 
     gvfs.enable = true;
     gnome.gnome-keyring.enable = true;
@@ -348,6 +353,8 @@
       pyenv
       direnv
       nix-direnv
+
+			#ufw
     ]
     ++ [
       # Zsh

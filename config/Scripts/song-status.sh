@@ -2,6 +2,9 @@
 
 player_name=$(playerctl metadata --format '{{playerName}}')
 player_status=$(playerctl status)
+if [[ "$player_status" == "Stopped" ]]; then
+    song_info=$(playerctl metadata --format '{{title}}  󰓇   {{artist}}')
+fi
 
 if [[ "$player_status" == "Playing" ]]; then
   if [[ "$player_name" == "spotify" ]]; then

@@ -6,7 +6,7 @@
 }:
 {
 	imports = [
-		./themes #{inherit pkgs;}
+		../themes #{inherit pkgs;}
 	];
 
   environment.systemPackages = with pkgs; [
