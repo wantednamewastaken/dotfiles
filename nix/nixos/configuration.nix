@@ -115,13 +115,21 @@
   networking = {
     firewall = {
       enable = true;
-      #allowedTCPPorts = [ 8096 ];
+      allowedTCPPorts = [ 22 ]; # Allow SSH
       #allowedUDPPorts = [ 8096 ];
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ 22 ]; # Allow SSH
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # networking.firewall.enable = false;
     };
 
     # TODO: Set your hostname
     hostName = "server-nixos";
-    networkmanager.enable = true;
+    networkmanager = {
+			enable = true;
+			wifi.powersave = false;
+		};
 		#wireless = {
 		#	enable = true;
 		#	networks."SHAW-D46EK" = { psk = "Steel22G45"; };
@@ -232,11 +240,6 @@
 			#};
 		};
 
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
   };
 
   # Users defined
@@ -305,6 +308,7 @@
       lxappearance
 		] ++ [
       file
+			pciutils	
       tldr
       tree
       unrar
