@@ -122,7 +122,38 @@
     # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # networking.firewall.enable = false;
-    };
+		  # Enable nftables
+		};
+
+		nftables.enable = true;
+
+		# Define your nftables rules
+		nftables.ruleset = ''
+			table inet filter {
+				# Main input chain
+				chain input {
+					type filter hook input priority 0; policy accept;
+
+					# Jump to custom chain
+					jump nixos-fw;
+				}
+
+				# Your custom chain
+				chain nixos-fw {
+					# Accept all loopback traffic
+					iifname "lo" accept;
+
+					# Accept established/related connections
+					ct state established,related accept;
+
+					# Accept SSH from anywhere
+					tcp dport 22 accept;
+
+					# Drop everything else
+					counter drop;
+				}
+			}
+		'';
 
     # TODO: Set your hostname
     hostName = "server-nixos";
